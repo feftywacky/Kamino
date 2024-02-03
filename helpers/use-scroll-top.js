@@ -16,3 +16,5 @@ export const useScrollTop = (threshold = 10) => {
 
   return scroll;
 }
+
+export default useScrollTop;

@@ -3,10 +3,12 @@
 import { useScrollTop } from "@/helpers/use-scroll-top";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
+import  Link  from  "next/link";
 import { ModeToggle } from "@/components/toggle-light-dark";
 import { useConvexAuth } from "convex/react";
-import { SignInButton } from "@clerk/clerk-react";
+import { SignInButton, UserButton } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/loading_animation";
 
 export const Navbar = () => {
     const { isAuthenticated, isLoading } = useConvexAuth();
@@ -29,11 +31,6 @@ export const Navbar = () => {
                       Log in
                     </Button>
                   </SignInButton>
-                  <SignInButton mode="modal">
-                    <Button size="sm">
-                      Get Kamino free
-                    </Button>
-                  </SignInButton>
                 </>
               )}
               {isAuthenticated && !isLoading && (
@@ -53,3 +50,5 @@ export const Navbar = () => {
           </div>
     );
 }
+
+export default Navbar;

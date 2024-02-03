@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/light-dark-provider";
-import { ConvexClientProvider } from "@/components/convex-client";
+
+import { ThemeProvider } from '../components/light-dark-provider'
+import { ConvexClientProvider } from '../components/convex-provider'
 
 const inter = Inter({ subsets: ["latin"] });
 
