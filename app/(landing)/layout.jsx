@@ -2,9 +2,11 @@ import { Navbar } from "./_components/navbar";
 
 const LandingLayout = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-full dark:bg-[#1F1F1F]">
       <Navbar />
-      {children}
+      <main className="h-full pt-40">
+        {children}
+      </main>
     </div>
   );
 }

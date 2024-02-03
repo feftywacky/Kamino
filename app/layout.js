@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/light-dark-provider";
+import { ConvexClientProvider } from "@/components/convex-client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +24,20 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ConvexClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          storageKey="kamino-theme"
+        >
+          {children}
+        </ThemeProvider>
+        </ConvexClientProvider>
+      </body>
     </html>
   );
 }
