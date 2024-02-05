@@ -2,7 +2,7 @@
 
 import { ChevronLeft, MenuIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,20 @@ export const Sidebar = () => {
   const navbarRef = useRef(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  useEffect(() => {
+    if (isMobile) {
+      collapseSidebar();
+    } else {
+      resetSidebar();
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isMobile) {
+      collapseSidebar();
+    }
+  }, [pathname, isMobile]);
 
   const handleMouseDown = (e) => {
     if (isMobile) return;
@@ -60,13 +74,14 @@ export const Sidebar = () => {
 
   const collapseSidebar = () => {
     if (sidebarRef.current && navbarRef.current) {
-      setIsCollapsed(true);
-      sidebarRef.current.style.width = "0";
-      navbarRef.current.style.left = "0";
-      navbarRef.current.style.width = "100%";
-      setTimeout(() => {
-        setIsResetting(false);
-      }, 300);
+        setIsCollapsed(true);
+        setIsResetting(true);
+        sidebarRef.current.style.width = "0";
+        navbarRef.current.style.left = "0";
+        navbarRef.current.style.width = "100%";
+        setTimeout(() => {
+            setIsResetting(false);
+        }, 300);
     }
   }
 
