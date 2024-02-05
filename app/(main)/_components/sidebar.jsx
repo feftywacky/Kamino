@@ -21,7 +21,7 @@ export const Sidebar = () => {
     isResizingRef.current = true;
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
-  }
+  };
 
   const handleMouseMove = (e) => {
     if (isMobile) return;
@@ -36,13 +36,38 @@ export const Sidebar = () => {
       navbarRef.current.style.left = `${newWidth}px`;
       navbarRef.current.style.width = `calc(100% - ${newWidth}px)`;
     }
-  }
+  };
 
   const handleMouseUp = () => {
     if (isMobile) return;
     isResizingRef.current = false;
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+  };
+
+  const resetSidebar = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(false);
+      setIsResetting(true);
+      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+      navbarRef.current.style.left = isMobile? "100%" : "240px";
+      navbarRef.current.style.width = isMobile? "0" : "calc(100% - 240px)";
+      setTimeout(() => {
+        setIsResetting(false);
+      }, 300);
+    }
+  };
+
+  const collapseSidebar = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setIsCollapsed(true);
+      sidebarRef.current.style.width = "0";
+      navbarRef.current.style.left = "0";
+      navbarRef.current.style.width = "100%";
+      setTimeout(() => {
+        setIsResetting(false);
+      }, 300);
+    }
   }
 
   return (
@@ -57,6 +82,7 @@ export const Sidebar = () => {
       >
         <div
           role="button"
+          onClick={collapseSidebar}
           className={cn(
             "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
             isMobile && "opacity-100"
@@ -65,11 +91,16 @@ export const Sidebar = () => {
           <ChevronLeft className="h-6 w-6" />
         </div>
         <div className="flex justify-center">
-          <p>Header</p>
+          <p>Actions</p>
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <p>Documents</p>
         </div>
 
         <div
-            onMouseDown={handleMouseDown}
+          onMouseDown={handleMouseDown}
+          onClick={resetSidebar}
           className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 
                 bg-primary/10 right-0 top-0"
         />
@@ -83,15 +114,15 @@ export const Sidebar = () => {
           isMobile && "left-0 w-full"
         )}
       >
-          <nav className="bg-transparent px-3 py-2 w-full">
-            {isCollapsed && (
-              <MenuIcon
-                onClick={resetWidth}
-                role="button"
-                className="h-6 w-6 text-muted-foreground"
-              />
-            )}
-          </nav>
+        <nav className="bg-transparent px-3 py-2 w-full">
+          {isCollapsed && (
+            <MenuIcon
+              onClick={resetSidebar}
+              role="button"
+              className="h-6 w-6 text-muted-foreground"
+            />
+          )}
+        </nav>
       </div>
     </>
   );
