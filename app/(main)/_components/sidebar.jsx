@@ -6,8 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 import { UserItem } from "./user-item";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export const Sidebar = () => {
+  const documents = useQuery(api.documents.get)
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)"); // same as md in tailwind
   const isResizingRef = useRef(false);
@@ -110,8 +113,10 @@ export const Sidebar = () => {
           <UserItem />
         </div>
 
-        <div className="flex justify-center mt-4">
-          <p>Documents</p>
+        <div className="mt-4">
+          {documents?.map((document) => (
+            <p key={document._id}>{document.title}</p>
+          ))}
         </div>
 
         <div
