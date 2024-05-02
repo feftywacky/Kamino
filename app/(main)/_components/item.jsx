@@ -5,11 +5,10 @@ import {ChevronDown, ChevronRight} from "lucide-react";
 import {cn} from "@/lib/utils";
 
 export const Item = ({ label, onClick, icon:Icon, id, documentIcon, 
-    active, expanded, isSearch, level=0, onExpand }) => {
+    active, expanded, isSearch, level=0, onExpand, isNewPage, isSettings }) => {
 
     const ChevronIcon = expanded ? ChevronDown : ChevronRight;
     
-
     return (
         <div 
             onClick={onClick} 
@@ -42,13 +41,28 @@ export const Item = ({ label, onClick, icon:Icon, id, documentIcon,
                 (<Icon className="shrink-0 h-[18px] mr-2 text-muted-foreground"/>)
             }
 
-            
             <span>{label}</span>
+
+            {isSettings && (
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">
+                        ⌘/Ctrl + S
+                    </span>
+                </kbd>
+            )}
+
+            {isNewPage && (
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">
+                        ⌘/Ctrl + T
+                    </span>
+                </kbd>
+            )}
 
             {isSearch && (
                 <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                     <span className="text-xs">
-                        Ctrl + K
+                        ⌘/Ctrl + K
                     </span>
                 </kbd>
             )}

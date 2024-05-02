@@ -1,7 +1,7 @@
 # Kamino
 
-Productivity Web App
-**In Development**
+Productivity Web App <br>
+**IN DEVELOPMENT**
 
 ## Getting Started
 
@@ -16,13 +16,13 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 ```
 
-### Run the Application
-run both backend and frontend on seperate terminals
+### Run
+Run both backend and frontend on seperate terminals
 ```bash
 npx convex dev
 npm run dev
 ```
 
-### Access the Application
+### Web App
 
-navigate to [http://localhost:3000/](http://localhost:3000/) in your web browser to access the application interface.
+Navigate to [http://localhost:3000/](http://localhost:3000/) in your web browser to access the application interface

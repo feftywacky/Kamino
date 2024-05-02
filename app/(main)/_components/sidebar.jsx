@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, MenuIcon, PlusCircle, Search } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -130,6 +130,12 @@ export const Sidebar = () => {
         <div>
           <UserItem />
           <Item 
+            label="Setting"
+            icon={Settings}
+            isSettings
+            onClick={()=>{}}
+          />
+          <Item 
             label="Search"
             icon={Search}
             isSearch
@@ -138,6 +144,7 @@ export const Sidebar = () => {
           <Item 
             onClick={handleCreate} 
             label="New Page" 
+            isNewPage
             icon={PlusCircle}
           />
         </div>
