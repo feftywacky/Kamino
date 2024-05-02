@@ -1,7 +1,7 @@
 # Kamino
 
-**Type:** Productivity Web App
-**Status:** In Development  
+Productivity Web App
+**In Development**
 
 ## Getting Started
 

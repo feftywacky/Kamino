@@ -1,16 +1,22 @@
 "use client";
 
-import { ChevronLeft, MenuIcon } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
-import { UserItem } from "./user-item";
-import { useQuery } from "convex/react";
+
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+
+import { UserItem } from "./user-item";
+import { Item } from "./item";
+
+import { toast } from "sonner";
 
 export const Sidebar = () => {
   const documents = useQuery(api.documents.get)
+  const create = useMutation(api.documents.create)
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)"); // same as md in tailwind
   const isResizingRef = useRef(false);
@@ -89,6 +95,18 @@ export const Sidebar = () => {
     }
   }
 
+  const handleCreate = () => {
+    const promise = create({
+      title: "Untitled Note"
+    })
+
+    toast.promise(promise, {
+      loading: "Creating note...",
+      success: "Note created.",
+      error: "Failed to create note."
+    });
+  };
+
   return (
     <>
       <aside
@@ -109,8 +127,19 @@ export const Sidebar = () => {
         >
           <ChevronLeft className="h-6 w-6" />
         </div>
-        <div className="flex justify-center">
+        <div>
           <UserItem />
+          <Item 
+            label="Search"
+            icon={Search}
+            isSearch
+            onClick={()=>{}}
+          />
+          <Item 
+            onClick={handleCreate} 
+            label="New Page" 
+            icon={PlusCircle}
+          />
         </div>
 
         <div className="mt-4">
