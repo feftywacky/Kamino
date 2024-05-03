@@ -29,11 +29,14 @@ Navigate to [http://localhost:3000/](http://localhost:3000/) in your web browser
 
 ## Technologies Used
 ### User Interface
-- [Lucide](https://lucide.dev/)
-- [shadcn-ui](https://ui.shadcn.com/)
+- [Lucide](https://lucide.dev/) (Icons)
+- [shadcn-ui](https://ui.shadcn.com/) (Style)
+- [Sonner](https://sonner.emilkowal.ski/) (Toasts)
+- [BlockNote](https://www.blocknotejs.org/docs) (Text Editor)
 
 ### Frontend
 - [React](https://react.dev/) + [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ### Backend
 - [Convex](https://www.convex.dev/)
