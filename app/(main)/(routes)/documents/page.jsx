@@ -13,7 +13,7 @@ const DocumentsPage = () => {
 
     const onCreate = () => {
         const promise = create({
-            title: "Untitled Note"
+            title: "Untitled"
         })
 
         toast.promise(promise, {

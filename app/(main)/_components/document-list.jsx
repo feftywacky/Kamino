@@ -8,10 +8,7 @@ import { cn } from "@/lib/utils";
 import { FileIcon } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 
-export const DocumentList = ({
-    parentDocumentId, 
-    level=0, 
-    data}) => {
+export const DocumentList = ({parentDocumentId, level=0, }) => {
     
     const params = useParams();
     const router = useRouter();
@@ -29,7 +26,7 @@ export const DocumentList = ({
     })
 
     const onRedirect = (documentId) => {
-        router.push(`/document/${documentId}`)
+        router.push(`/documents/${documentId}`)
     }
 
     if (documents===undefined){
@@ -49,26 +46,25 @@ export const DocumentList = ({
     return (
         <>
             <p
-            style={{paddingLeft: level? `${(level*12)+12}px` : undefined}}
-            className={cn("hidden text-sm font-medium text-muted-foreground/80", expanded && "last:block", level===0 && "hidden")}
+                style={{paddingLeft: level? `${(level*12)+25}px` : undefined}}
+                className={cn("hidden text-sm font-medium text-muted-foreground/80 ml-2", expanded && "last:block", level===0 && "hidden")}
             >
                 No Pages Inside
             </p>
             {documents.map((document)=>(
                 <div key={document._id}>
                     <Item
-                    id={document._id}
-                    onClick={()=>onRedirect(document._id)}
-                    label={document.title}
-                    icon={FileIcon}
-                    documentIcon={document.icon}
-                    active={params.documentId===document._id}
-                    level={level}
-                    onExpand={()=>onExpand(document._id)}
-                    expanded={expanded[document._id]}
-                    >
+                        id={document._id}
+                        onClick={()=>onRedirect(document._id)}
+                        label={document.title}
+                        icon={FileIcon}
+                        documentIcon={document.icon}
+                        active={params.documentId===document._id}
+                        level={level}
+                        onExpand={()=>onExpand(document._id)}
+                        expanded={expanded[document._id]}
+                    />
                         {expanded[document._id] && (<DocumentList parentDocumentId={document._id} level={level+1}/>)}
-                    </Item>
                 </div>
             ))}
         </>

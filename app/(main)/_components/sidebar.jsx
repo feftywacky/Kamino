@@ -98,7 +98,7 @@ export const Sidebar = () => {
 
   const handleCreate = () => {
     const promise = create({
-      title: "Untitled Note"
+      title: "Untitled"
     })
 
     toast.promise(promise, {
