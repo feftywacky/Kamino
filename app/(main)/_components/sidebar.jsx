@@ -1,10 +1,12 @@
 "use client";
 
-import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
+
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -15,6 +17,8 @@ import { Item } from "./item";
 import { toast } from "sonner";
 
 import { DocumentList } from "./document-list";
+
+import { TrashBox } from "./trashbox";
 
 export const Sidebar = () => {
   const create = useMutation(api.documents.create)
@@ -152,6 +156,17 @@ export const Sidebar = () => {
 
         <div className="mt-4">
           <DocumentList />
+        </div>
+
+        <div className="mt-4">
+          <Popover>
+            <PopoverTrigger className="w-full">
+              <Item label="Tash" icon={Trash} />
+            </PopoverTrigger>
+            <PopoverContent side={isMobile ? "bottom" : "right"} className="p-0 w-72">
+              <TrashBox />
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div
