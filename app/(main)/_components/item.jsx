@@ -135,7 +135,7 @@ export const Item = ({ label, onClick, icon:Icon, id, documentIcon,
                         >
                             <DropdownMenuItem onClick={onArchive}>
                                 <Trash className="h-4 w-4 mr-2"/>
-                                Delete
+                                Move to Trash
                             </DropdownMenuItem>
 
                             <DropdownMenuSeparator/>
