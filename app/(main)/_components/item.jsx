@@ -36,7 +36,7 @@ export const Item = ({ label, onClick, icon:Icon, id, documentIcon,
 
     const handleExpand = (event) => {
         event.stopPropagation();
-        onExpand();
+        onExpand?.();
     }
 
     const onCreate = (event) => {
@@ -44,7 +44,7 @@ export const Item = ({ label, onClick, icon:Icon, id, documentIcon,
         if (!id) return;
 
         const promise = create({title: "Untitled", parentDocument: id}).then(()=>{
-            if (!expanded) onExpand();
+            if (!expanded) onExpand?.();
             router.push(`/documents/${documentId}`);
 
             toast.promise(promise, {
@@ -141,7 +141,7 @@ export const Item = ({ label, onClick, icon:Icon, id, documentIcon,
                             <DropdownMenuSeparator/>
 
                             <div className="text-xs text-muted-foreground p-2">
-                                Editor: {user.fullName}
+                                Editor: {user?.fullName}
                             </div>
 
                         </DropdownMenuContent>

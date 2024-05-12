@@ -26,7 +26,7 @@ const DocumentsPage = () => {
     return (
         <div className="h-full flex flex-col items-center justify-center space-y-4">
             <h2 className="text-lg text-center font-medium">
-                Hello {user.firstName ? user.firstName : There}.
+                Hello {user?.firstName}.
                 <br />
                 Your notes are ready.
             </h2>
