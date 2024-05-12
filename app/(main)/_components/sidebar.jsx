@@ -161,7 +161,7 @@ export const Sidebar = () => {
         <div className="mt-4">
           <Popover>
             <PopoverTrigger className="w-full">
-              <Item label="Tash" icon={Trash} />
+              <Item label="Trash" icon={Trash} />
             </PopoverTrigger>
             <PopoverContent side={isMobile ? "bottom" : "right"} className="p-0 w-72">
               <TrashBox />

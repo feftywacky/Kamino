@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
           storageKey="kamino-theme"
         >
-          <Toaster position="botton-center"/>
+          <Toaster position="top-center"/>
           {children}
         </ThemeProvider>
         </ConvexClientProvider>

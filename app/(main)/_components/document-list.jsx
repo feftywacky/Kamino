@@ -54,7 +54,7 @@ export const DocumentList = ({ parentDocumentId, level = 0, }) => {
                 {message}
             </p>
 
-            {documents.map((document) => (
+            {documents?.map((document) => (
                 <div key={document._id}>
                     <Item
                         id={document._id}

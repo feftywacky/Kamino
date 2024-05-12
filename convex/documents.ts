@@ -191,6 +191,6 @@ export const remove = mutation({
         }
 
         const document = await ctx.db.delete(args.id);
-        return Document;
+        return document;
     }
 });
