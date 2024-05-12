@@ -44,7 +44,7 @@ export const DocumentList = ({ parentDocumentId, level = 0, }) => {
     }
 
     const paddingLeftStyle = level ? `${(level * 12) + 25}px` : undefined;
-    const baseClassName =  "hidden text-sm font-medium text-muted-foreground/80 ml-4";
+    const baseClassName =  "hidden text-sm font-medium text-muted-foreground/80 ml-4 mt-1";
     const conditionalClassName = `${expanded && "last:block"} ${level===0 && "hidden"}`;
     const message = documents.length === 0 ? "You have no pages" : "No pages inside";
 
