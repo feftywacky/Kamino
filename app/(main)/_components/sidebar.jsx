@@ -11,6 +11,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
+import { useSearch } from "@/hooks/search";
+
 import { UserItem } from "./user-item";
 import { Item } from "./item";
 
@@ -21,6 +23,7 @@ import { DocumentList } from "./document-list";
 import { TrashBox } from "./trashbox";
 
 export const Sidebar = () => {
+  const search = useSearch();
   const create = useMutation(api.documents.create)
   const pathname = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)"); // same as md in tailwind
@@ -144,7 +147,7 @@ export const Sidebar = () => {
             label="Search"
             icon={Search}
             isSearch
-            onClick={()=>{}}
+            onClick={search.onOpen}
           />
           <Item 
             onClick={handleCreate} 
