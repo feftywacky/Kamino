@@ -11,7 +11,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
-import { useSearch } from "@/hooks/search";
+import { useSearch } from "@/hooks/use-search";
+import { useSetting } from "@/hooks/use-setting";
 
 import { UserItem } from "./user-item";
 import { Item } from "./item";
@@ -23,6 +24,7 @@ import { DocumentList } from "./document-list";
 import { TrashBox } from "./trashbox";
 
 export const Sidebar = () => {
+  const setting = useSetting();
   const search = useSearch();
   const create = useMutation(api.documents.create)
   const pathname = usePathname();
@@ -141,7 +143,7 @@ export const Sidebar = () => {
             label="Setting"
             icon={Settings}
             isSettings
-            onClick={()=>{}}
+            onClick={setting.onOpen}
           />
           <Item 
             label="Search"

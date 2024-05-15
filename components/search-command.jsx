@@ -15,7 +15,7 @@ import {
     CommandList,
 } from "@/components/ui/command";
 
-import { useSearch } from "@/hooks/search";
+import { useSearch } from "@/hooks/use-search";
 import { api } from "@/convex/_generated/api";
 
 export const SearchCommand = () => {
