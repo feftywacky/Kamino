@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
     Dialog,
     DialogContent,
@@ -10,10 +11,24 @@ import { useSetting } from "@/hooks/use-setting";
 import { ModeToggle } from "@/components/toggle-light-dark";
 
 export const SettingModal = () => {
-    const setting = useSetting();
+    const toggle = useSetting((store) => store.toggle);
+    const isOpen = useSetting((store) => store.isOpen);
+    const onClose = useSetting((store) => store.onClose);
+
+    useEffect(() => {
+        const down = (e) => {
+            if ((e.key === "o" || e.key === "O") && (e.metaKey || e.ctrlKey)) {
+                e.preventDefault();
+                toggle();
+            }
+        };
+
+        document.addEventListener("keydown", down);
+        return () => document.removeEventListener("keydown", down);
+    }, [toggle]);
 
     return (
-        <Dialog open={setting.isOpen} onOpenChange={setting.onClose}>
+        <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader className="border-b pb-3">
                     <h2 className="text-lg font-medium">

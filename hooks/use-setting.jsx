@@ -1,7 +1,8 @@
 import { create } from "zustand";
 
-export const useSetting = create((set) => ({
+export const useSetting = create((set, get) => ({
     isOpen: false,
-    onOpen: () => set({ isOpen: true }),
-    onClose: () => set({ isOpen: false }),
-}));
+    onOpen: () => set({isOpen: true}),
+    onClose: () => set({isOpen: false}),
+    toggle: () => set({isOpen: !get().isOpen}),
+}))
