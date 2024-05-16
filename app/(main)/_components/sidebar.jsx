@@ -2,7 +2,7 @@
 
 import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 
@@ -105,7 +105,7 @@ export const Sidebar = () => {
     }
   }
 
-  const handleCreate = () => {
+  const handleCreate = useCallback(() => {
     const promise = create({
       title: "Untitled"
     })
@@ -115,7 +115,19 @@ export const Sidebar = () => {
       success: "Note created.",
       error: "Failed to create note."
     });
-  };
+  }, [create]);
+
+  useEffect(() => {
+    const down = (e) => {
+        if ((e.key === "p" || e.key === "P") && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            handleCreate();
+        }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+}, [handleCreate]);
 
   return (
     <>
