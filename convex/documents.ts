@@ -102,13 +102,12 @@ export const getTrash = query({
         const archivedDocs = await  ctx.db.query("documents").withIndex("by_user",
             (q)=>q.eq("userId", userId)).filter((q)=>q.eq(q.field("isArchived"), true)).order("desc").collect();
         
-        return archivedDocs; 
+        return archivedDocs.reverse(); 
     }
 });
 
 export const restoreArchive = mutation({
-    args: {
-        id: v.id("documents")},
+    args: {id: v.id("documents")},
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
         if (!identity){
@@ -157,6 +156,64 @@ export const restoreArchive = mutation({
     }
 });
 
+export const restoreArchiveAll = mutation({
+    args: { ids: v.array(v.id("documents")) },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity){
+            throw new Error("Not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        const documents = await Promise.all(args.ids.map(id => ctx.db.get(id)));
+
+        // verify if all documents belong to the user before restoring
+        for (const doc of documents){
+            if (doc?.userId !== userId){
+                throw new Error("Not authorized");
+            }
+        }
+
+        // recursive restore function to restore documents and their children
+        const recursiveRestore = async (documentId: Id<"documents">) => {
+            const children = await ctx.db.query("documents").withIndex("by_user_parent", (q)=>(q.eq("userId", userId).eq("parentDocument", documentId))).collect();
+
+            for (const child of children)
+            {
+                await ctx.db.patch(child._id,{
+                    isArchived: false,
+                });
+
+                await recursiveRestore(child._id);
+            }
+        }
+
+        for (const doc of documents) {
+            if (doc) {
+                const options: Partial<Doc<"documents">> = {
+                    isArchived: false,
+                };
+
+                if (doc.parentDocument) {
+                    const parent = await ctx.db.get(doc.parentDocument);
+                    if (parent?.isArchived) {
+                        options.parentDocument = undefined;
+                    }
+                }
+
+                await ctx.db.patch(doc._id, options);
+                // await ensures the recursive function is completed before moving to the next document,
+                // so that the children of the document are restored before the parent
+                await recursiveRestore(doc._id); 
+                
+            }
+        }
+        
+        return { message: "All trashed documents have been restored" };
+    }
+});
+
 export const remove = mutation({
     args: { id: v.id("documents") },
     handler: async (ctx, args) => {
@@ -181,6 +238,35 @@ export const remove = mutation({
         return document;
     }
 });
+
+export const removeAll = mutation({
+    args: { ids: v.array(v.id("documents")) },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity){
+            throw new Error("Not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        const documents = await Promise.all(args.ids.map(id => ctx.db.get(id)));
+
+        // verify if all documents belong to the user before deleting
+        for (const doc of documents) {
+            if (doc?.userId !== userId){
+                throw new Error("Not authorized");
+            }
+        }
+
+        for (const doc of documents) {
+            if (doc) {
+                await ctx.db.delete(doc._id);
+            }
+        }
+
+        return { message: "All trashed documents have been deleted" };
+    }
+})
 
 export const getSearch = query({
     handler: async (ctx) => {

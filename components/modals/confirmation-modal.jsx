@@ -12,7 +12,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-export const ConfirmationModal = ({children, onConfirm}) => {
+export const ConfirmationModal = ({children, onConfirm, title, actionLabel}) => {
 
     const handleConfirm = (e) => {
         e.stopPropagation();
@@ -26,12 +26,12 @@ export const ConfirmationModal = ({children, onConfirm}) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogTitle>{title}</AlertDialogTitle>
                     <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleConfirm}>Confirm delete</AlertDialogAction>
+                    <AlertDialogAction onClick={handleConfirm}>{actionLabel}</AlertDialogAction>
                 </AlertDialogFooter>    
             </AlertDialogContent>
         </AlertDialog>

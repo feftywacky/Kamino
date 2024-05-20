@@ -8,7 +8,7 @@ import { api } from "@/convex/_generated/api";
 
 import { toast } from "sonner";
 import { Spinner } from "@/components/ui/loading_animation";
-import { Search, Trash, Undo } from "lucide-react";
+import { Search, Trash, Trash2, History, RotateCcw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ConfirmationModal } from "@/components/modals/confirmation-modal";
 
@@ -18,7 +18,9 @@ export const TrashBox = () => {
     const params = useParams();
     const documents = useQuery(api.documents.getTrash);
     const restore = useMutation(api.documents.restoreArchive);
+    const restoreAll = useMutation(api.documents.restoreArchiveAll);
     const remove = useMutation(api.documents.remove);
+    const removeAll = useMutation(api.documents.removeAll);
 
     const [search, setSearch] = useState("");
 
@@ -41,6 +43,16 @@ export const TrashBox = () => {
         })
     }
 
+    const onRestoreAll= (event) => { 
+        const promise = restoreAll({ ids : documents.map((doc) => doc._id) });
+
+        toast.promise(promise, {
+            loading: "Restoring all notes...",
+            success: "All notes restored!",
+            error: "Failed to restore all notes."
+        })
+    }
+
     const onRemove = (documentId) => {
         const promise = remove({ id: documentId });
 
@@ -56,6 +68,25 @@ export const TrashBox = () => {
         }
     }
 
+    const onRemoveAll = () => {
+        const promise = removeAll({ ids: documents.map((doc) => doc._id) });
+
+        toast.promise(promise, { 
+            loading: "Deleting all notes...",
+            success: "All notes deleted!",
+            error: "Failed to delete all notes."
+        })
+
+        // Redirect to documents page if the current document is deleted
+        if (params.documentId) {
+            router.push("/documents");
+        }
+    }
+
+    const showEmptyTrashMsg = () => {
+        toast.error("No archived documents to restore or delete.")
+    }
+
     if (documents === undefined) {
         return (
             <div className="h-full flex items-center justify-center p-4">
@@ -67,13 +98,57 @@ export const TrashBox = () => {
     return (
         <div className="text-sm">
             <div className="flex items-center gap-x-1 p-2">
-                <Search className="h-4 w-4" />
-                <Input
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="h-7 px-2 focus-visible:ring-transparent bg-secondary"
-                    placeholder="Filter by page title..."
-                />
+                <div>
+                    <Search className="h-4 w-4" />
+                </div>
+                <div className="pr-2 pl-1">
+                    <Input
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="h-7 px-1 focus-visible:ring-transparent bg-secondary"
+                        placeholder="Filter by page title..."
+                    />
+                </div>  
+                <div className="flex mr-[-4px]">
+                    {documents.length ? (
+                        <>
+                            <ConfirmationModal 
+                            onConfirm={() => onRestoreAll()}
+                            title={"Are you sure you want to restore ALL archived documents?"} 
+                            actionLabel={"Confirm archive"}
+                            >
+                            <div className="flex items-center rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+                                <History className="h-4 w-4" />
+                            </div>
+                            </ConfirmationModal>
+                            <ConfirmationModal 
+                                onConfirm={() => onRemoveAll()}
+                                title={"Are you sure you want to delete ALL documents?"} 
+                                actionLabel={"Confirm delete all"}
+                            >
+                                <div className="flex items-center rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600">
+                                    <Trash2 className="h-4 w-4" />
+                                </div>
+                            </ConfirmationModal>
+                        </>
+                    ) : (
+                        <>
+                            <div 
+                                className="flex items-center rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                                onClick={()=>showEmptyTrashMsg()}
+                                >
+                                <History className="h-4 w-4" />
+                            </div>
+                            <div 
+                                className="flex items-center rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
+                                onClick={()=>showEmptyTrashMsg()}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </div>
+                        </>
+                    )}
+                    
+                </div>
             </div>
             <div className="mt-2 px-1 pb-1">
                 <p className="hidden last:block text-xs text-center text-muted-foreground pb-2">
@@ -95,9 +170,13 @@ export const TrashBox = () => {
                                 role="button"
                                 className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
                             >
-                                <Undo className="h-4 w-4 text-muted-foreground" />
+                                <RotateCcw className="h-4 w-4 text-muted-foreground" />
                             </div>
-                            <ConfirmationModal onConfirm={() => onRemove(document._id)}>
+                            <ConfirmationModal 
+                                onConfirm={() => onRemove(document._id)}
+                                title={"Are you sure you want to delete this document?"} 
+                                actionLabel={"Confirm delete"}
+                            >
                                 <div
                                     role="button"
                                     className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600"
