@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ import { useSetting } from "@/hooks/use-setting";
 
 import { UserItem } from "./user-item";
 import { Item } from "./item";
+import { Navbar } from "./navbar";
 
 import { toast } from "sonner";
 
@@ -24,6 +25,7 @@ import { DocumentList } from "./document-list";
 import { TrashBox } from "./trashbox";
 
 export const Sidebar = () => {
+  const params = useParams();
   const setting = useSetting();
   const search = useSearch();
   const create = useMutation(api.documents.create)
@@ -84,8 +86,8 @@ export const Sidebar = () => {
       setIsCollapsed(false);
       setIsResetting(true);
       sidebarRef.current.style.width = isMobile ? "100%" : "240px";
-      navbarRef.current.style.left = isMobile? "100%" : "240px";
-      navbarRef.current.style.width = isMobile? "0" : "calc(100% - 240px)";
+      navbarRef.current.style.left = isMobile ? "100%" : "240px";
+      navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 240px)";
       setTimeout(() => {
         setIsResetting(false);
       }, 300);
@@ -94,14 +96,14 @@ export const Sidebar = () => {
 
   const collapseSidebar = () => {
     if (sidebarRef.current && navbarRef.current) {
-        setIsCollapsed(true);
-        setIsResetting(true);
-        sidebarRef.current.style.width = "0";
-        navbarRef.current.style.left = "0";
-        navbarRef.current.style.width = "100%";
-        setTimeout(() => {
-            setIsResetting(false);
-        }, 300);
+      setIsCollapsed(true);
+      setIsResetting(true);
+      sidebarRef.current.style.width = "0";
+      navbarRef.current.style.left = "0";
+      navbarRef.current.style.width = "100%";
+      setTimeout(() => {
+        setIsResetting(false);
+      }, 300);
     }
   }
 
@@ -119,15 +121,15 @@ export const Sidebar = () => {
 
   useEffect(() => {
     const down = (e) => {
-        if ((e.key === "p" || e.key === "P") && (e.metaKey || e.ctrlKey)) {
-            e.preventDefault();
-            handleCreate();
-        }
+      if ((e.key === "p" || e.key === "P") && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleCreate();
+      }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-}, [handleCreate]);
+  }, [handleCreate]);
 
   return (
     <>
@@ -151,21 +153,21 @@ export const Sidebar = () => {
         </div>
         <div>
           <UserItem />
-          <Item 
+          <Item
             label="Setting"
             icon={Settings}
             isSettings
             onClick={setting.onOpen}
           />
-          <Item 
+          <Item
             label="Search"
             icon={Search}
             isSearch
             onClick={search.onOpen}
           />
-          <Item 
-            onClick={handleCreate} 
-            label="New Page" 
+          <Item
+            onClick={handleCreate}
+            label="New Page"
             isNewPage
             icon={PlusCircle}
           />
@@ -202,18 +204,20 @@ export const Sidebar = () => {
           isMobile && "left-0 w-full"
         )}
       >
-        <nav className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && (
-            <MenuIcon
-              onClick={resetSidebar}
-              role="button"
-              className="h-6 w-6 text-muted-foreground"
-            />
-          )}
-        </nav>
+        {!!params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetSidebar={resetSidebar} />
+        ) : (
+          <nav className="bg-transparent px-3 py-2 w-full">
+            {isCollapsed && (
+              <MenuIcon
+                onClick={resetSidebar}
+                role="button"
+                className="h-6 w-6 text-muted-foreground"
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );
 };
-
-export default Sidebar;

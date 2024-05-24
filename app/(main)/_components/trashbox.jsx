@@ -43,7 +43,7 @@ export const TrashBox = () => {
         })
     }
 
-    const onRestoreAll= (event) => { 
+    const onRestoreAll= () => {
         const promise = restoreAll({ ids : documents.map((doc) => doc._id) });
 
         toast.promise(promise, {
