@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuTrigger,DropdownMenuContent,DropdownMenuItem, DropdownMenuSeparator  } from "@/components/ui/dropdown-menu";
 
 export const Item = ({ label, onClick, icon:Icon, id, documentIcon, 
-    active, expanded, isSearch, level=0, onExpand, isNewPage, isSettings }) => {
+    active, expanded, isSearch, level=0, onExpand, isNewPage, isSettings, isTrash }) => {
 
     const { user } = useUser(); 
     const router = useRouter();
@@ -112,6 +112,15 @@ export const Item = ({ label, onClick, icon:Icon, id, documentIcon,
                         Ctrl + K
                     </span>
                 </kbd>
+            )}
+
+            {isTrash && (
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs">
+                        Ctrl + M
+                    </span>
+                </kbd>
+            
             )}
 
             {!!id && (

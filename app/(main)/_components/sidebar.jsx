@@ -2,7 +2,7 @@
 
 import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +36,7 @@ export const Sidebar = () => {
   const navbarRef = useRef(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+  const [isTrashOpen, setIsTrashOpen] = useState(false);
 
   useEffect(() => {
     if (isMobile) {
@@ -118,18 +119,23 @@ export const Sidebar = () => {
       error: "Failed to create note."
     });
   }, [create]);
-
+  
   useEffect(() => {
     const down = (e) => {
       if ((e.key === "p" || e.key === "P") && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         handleCreate();
       }
+
+      if ((e.key === "m" || e.key === "M") && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setIsTrashOpen(!isTrashOpen);
+      }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, [handleCreate]);
+  }, [handleCreate, isTrashOpen]);
 
   return (
     <>
@@ -178,9 +184,13 @@ export const Sidebar = () => {
         </div>
 
         <div className="mt-4">
-          <Popover>
-            <PopoverTrigger className="w-full">
-              <Item label="Trash" icon={Trash} />
+          <Popover open={isTrashOpen} onOpenChange={setIsTrashOpen}>
+            <PopoverTrigger className="w-full focus:outline-none">
+              <Item 
+                label="Trash" 
+                icon={Trash} 
+                isTrash
+              />
             </PopoverTrigger>
             <PopoverContent side={isMobile ? "bottom" : "right"} className="p-0 w-72">
               <TrashBox />
