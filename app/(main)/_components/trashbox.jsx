@@ -113,9 +113,9 @@ export const TrashBox = () => {
                     {documents.length ? (
                         <>
                             <ConfirmationModal 
-                            onConfirm={() => onRestoreAll()}
-                            title={"Are you sure you want to restore ALL archived documents?"} 
-                            actionLabel={"Confirm archive"}
+                                onConfirm={() => onRestoreAll()}
+                                title={"Are you sure you want to restore ALL archived documents?"} 
+                                actionLabel={"Confirm archive"}
                             >
                             <div className="flex items-center rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-600">
                                 <History className="h-4 w-4" />

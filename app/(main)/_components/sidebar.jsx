@@ -2,7 +2,7 @@
 
 import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { useParams, usePathname } from "next/navigation";
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
 
@@ -65,7 +65,7 @@ export const Sidebar = () => {
     if (!isResizingRef.current) return;
 
     let newWidth = e.clientX;
-    if (newWidth < 240) newWidth = 240;
+    if (newWidth < 240) newWidth = 280;
     if (newWidth > 480) newWidth = 480;
 
     if (sidebarRef.current && navbarRef.current) {
@@ -86,9 +86,9 @@ export const Sidebar = () => {
     if (sidebarRef.current && navbarRef.current) {
       setIsCollapsed(false);
       setIsResetting(true);
-      sidebarRef.current.style.width = isMobile ? "100%" : "240px";
-      navbarRef.current.style.left = isMobile ? "100%" : "240px";
-      navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 240px)";
+      sidebarRef.current.style.width = isMobile ? "100%" : "280px";
+      navbarRef.current.style.left = isMobile ? "100%" : "280px";
+      navbarRef.current.style.width = isMobile ? "0" : "calc(100% - 280px)";
       setTimeout(() => {
         setIsResetting(false);
       }, 300);
@@ -138,11 +138,11 @@ export const Sidebar = () => {
   }, [handleCreate, isTrashOpen]);
 
   return (
-    <>
+    <div className="py-4">
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar h-full bg-secondary overflow-y-auto relative flex flex-col w-60 z-[99999]",
+          "rounded-[14px] group/sidebar h-full bg-secondary overflow-y-auto relative flex flex-col w-[280px] z-[99999]",
           isResetting && "transition-all ease-in-out duration-300",
           isMobile && "w-0"
         )}
@@ -228,6 +228,6 @@ export const Sidebar = () => {
           </nav>
         )}
       </div>
-    </>
+    </div>
   );
 };
