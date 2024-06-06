@@ -40,6 +40,7 @@ Navigate to [http://localhost:3000/](http://localhost:3000/) in your web browser
 
 ### Backend
 - [Convex](https://www.convex.dev/)
+- [Edge Store](https://edgestore.dev/) (Image storage - 1GB free)
 
 ### Authentication
-- [Clerk](https://clerk.com/)
+- [Clerk](https://clerk.com/) (10,000 users free)

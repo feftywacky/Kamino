@@ -138,7 +138,7 @@ export const Sidebar = () => {
   }, [handleCreate, isTrashOpen]);
 
   return (
-    <div className="">
+    <div className="pl-4 py-14">
       <aside
         ref={sidebarRef}
         className={cn(
