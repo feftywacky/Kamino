@@ -3,7 +3,7 @@
 
 Productivity Web App
 
-## Getting Started
+## Getting Started (local)
 
 ### Setup Environment Variables
 
@@ -14,6 +14,8 @@ CONVEX_DEPLOYMENT =
 NEXT_PUBLIC_CONVEX_URL =
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY =
 CLERK_SECRET_KEY =
+EDGE_STORE_ACCESS_KEY =
+EDGE_STORE_SECRET_KEY =
 ```
 
 ### Run
@@ -32,14 +34,14 @@ Navigate to [http://localhost:3000/](http://localhost:3000/) in your web browser
 - [Lucide](https://lucide.dev/) (Icons)
 - [shadcn-ui](https://ui.shadcn.com/) (Style)
 - [Sonner](https://sonner.emilkowal.ski/) (Toasts)
-- [BlockNote](https://www.blocknotejs.org/docs) (Text Editor)
+- [BlockNote](https://www.blocknotejs.org/docs) (Text editor)
 
 ### Frontend
 - [React](https://react.dev/) + [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
 ### Backend
-- [Convex](https://www.convex.dev/)
+- [Convex](https://www.convex.dev/) (Realtime database)
 - [Edge Store](https://edgestore.dev/) (Image storage - 1GB free)
 
 ### Authentication
