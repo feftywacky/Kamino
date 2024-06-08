@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings, Trash } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
@@ -25,6 +25,7 @@ import { DocumentList } from "./document-list";
 import { TrashBox } from "./trashbox";
 
 export const Sidebar = () => {
+  const router = useRouter();
   const params = useParams();
   const setting = useSetting();
   const search = useSearch();
@@ -109,16 +110,14 @@ export const Sidebar = () => {
   }
 
   const handleCreate = useCallback(() => {
-    const promise = create({
-      title: "Untitled"
-    })
-
+    const promise = create({ title: "Untitled" }).then((documentId) => router.push(`/documents/${documentId}`));
+  
     toast.promise(promise, {
       loading: "Creating note...",
       success: "Note created.",
       error: "Failed to create note."
     });
-  }, [create]);
+  }, [create, router]);
   
   useEffect(() => {
     const down = (e) => {
