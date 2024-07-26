@@ -98,10 +98,10 @@ export const TrashBox = () => {
     return (
         <div className="text-sm">
             <div className="flex items-center gap-x-1 p-2">
-                <div>
+                <div className="pl-1">
                     <Search className="h-4 w-4" />
                 </div>
-                <div className="pr-2 pl-1">
+                <div className="pr-2 pl-2">
                     <Input
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
