@@ -1,48 +1,36 @@
-# Kamino
-**IN DEVELOPMENT**
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Productivity Web App
+## Getting Started
 
-## Getting Started (local)
+First, run the development server:
 
-### Setup Environment Variables
-
-Set up the necessary environment variables by adding the following lines to your environment configuration file:
-
-```plaintext
-CONVEX_DEPLOYMENT =
-NEXT_PUBLIC_CONVEX_URL =
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY =
-CLERK_SECRET_KEY =
-EDGE_STORE_ACCESS_KEY =
-EDGE_STORE_SECRET_KEY =
-```
-
-### Run
-Run both backend and frontend on seperate terminals
 ```bash
-npx convex dev
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-### Web App
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Navigate to [http://localhost:3000/](http://localhost:3000/) in your web browser to access the application interface
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Technologies Used
-### User Interface
-- [Lucide](https://lucide.dev/) (Icons)
-- [shadcn-ui](https://ui.shadcn.com/) (Style)
-- [Sonner](https://sonner.emilkowal.ski/) (Toasts)
-- [BlockNote](https://www.blocknotejs.org/docs) (Text editor)
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-### Frontend
-- [React](https://react.dev/) + [Next.js](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
+## Learn More
 
-### Backend
-- [Convex](https://www.convex.dev/) (Realtime database)
-- [Edge Store](https://edgestore.dev/) (Image storage - 1GB free)
+To learn more about Next.js, take a look at the following resources:
 
-### Authentication
-- [Clerk](https://clerk.com/) (10,000 users free)
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
